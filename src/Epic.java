@@ -26,12 +26,4 @@ public class Epic extends Task {
                 ", status=" + status +
                 '}';
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || obj.getClass() != getClass()) return false;
-        Epic epic = (Epic) obj;
-        return epic.id == this.id;
-    }
 }
