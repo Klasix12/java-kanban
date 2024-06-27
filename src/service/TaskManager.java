@@ -118,9 +118,11 @@ public class TaskManager {
     }
 
     public void removeSubtaskById(int id) {
-        Epic epic = subtasks.get(id).getEpicTask();
-        subtasks.remove(id);
-        updateEpicStatus(epic);
+        if (subtasks.containsKey(id)) {
+            Epic epic = subtasks.get(id).getEpicTask();
+            subtasks.remove(id);
+            updateEpicStatus(epic);
+        }
     }
 
     public HashMap<Integer, Subtask> getEpicSubtasks(Epic epic) {
