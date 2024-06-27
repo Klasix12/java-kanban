@@ -93,6 +93,7 @@ public class TaskManager {
     public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())){
             epics.put(epic.getId(), epic);
+            updateEpicStatus(epic);
         }
     }
 
