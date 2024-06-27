@@ -11,12 +11,6 @@ public class Task {
         this.description = description;
     }
 
-    Task(String name, String description, Status status) {
-        this.name = name;
-        this.description = description;
-        this.status = status;
-    }
-
     public String getName() {
         return name;
     }
