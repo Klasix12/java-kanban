@@ -44,6 +44,7 @@ public class TaskManager {
     }
 
     public void clearEpics() {
+        subtasks.clear();
         epics.clear();
     }
 
