@@ -24,10 +24,10 @@ public class Main {
         System.out.println();
 
 
-        Epic shopping = new Epic("Сходить в магазин", "Купить продукты по списку", new ArrayList<>());
+        Epic shopping = new Epic("Сходить в магазин", "Купить продукты по списку");
         Subtask shoppingSubtask1 = new Subtask("Купить молоко", "", shopping);
         Subtask shoppingSubtask2 = new Subtask("Купить шоколадку", "", shopping);
-        Epic apartmentRenovation = new Epic("Сделать ремонт", "", new ArrayList<>());
+        Epic apartmentRenovation = new Epic("Сделать ремонт", "");
         Subtask apartmentRenovationSubtask = new Subtask(
                 "Поклеить обои", "Поклеить обои в коридоре", apartmentRenovation);
         taskManager.addEpic(apartmentRenovation);
