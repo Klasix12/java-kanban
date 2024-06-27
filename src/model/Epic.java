@@ -34,4 +34,16 @@ public class Epic extends Task {
     public int hashCode() {
         return Objects.hash(name, description, id, status, subtasks);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || obj.getClass() != getClass()) return false;
+        Epic otherEpic = (Epic) obj;
+        return Objects.equals(name, otherEpic.name) &&
+                Objects.equals(description, otherEpic.description) &&
+                Objects.equals(id, otherEpic.id) &&
+                Objects.equals(status, otherEpic.status) &&
+                Objects.equals(subtasks, otherEpic.subtasks);
+    }
 }
