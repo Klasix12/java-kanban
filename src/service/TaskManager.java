@@ -126,14 +126,8 @@ public class TaskManager {
         }
     }
 
-    public HashMap<Integer, Subtask> getEpicSubtasks(Epic epic) {
-        HashMap<Integer, Subtask> epicSubtasks = new HashMap<>();
-        for (Map.Entry<Integer, Subtask> entry : subtasks.entrySet()) {
-            if (entry.getValue().getEpicTask().equals(epic)) {
-                epicSubtasks.put(entry.getKey(), entry.getValue());
-            }
-        }
-        return epicSubtasks;
+    public ArrayList<Subtask> getEpicSubtasks(Epic epic) {
+        return epic.getSubtasks();
     }
 
     private void updateEpicStatus(Epic epic) {
