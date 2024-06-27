@@ -5,6 +5,7 @@ import model.Status;
 import model.Subtask;
 import model.Task;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,16 +15,28 @@ public class TaskManager {
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();;
     private int taskId;
 
-    public HashMap<Integer, Task> getTasks() {
-        return tasks;
+    public ArrayList<Task> getTasks() {
+        ArrayList<Task> tasksList = new ArrayList<>();
+        for (Task task : tasks.values()) {
+            tasksList.add(task);
+        }
+        return tasksList;
     }
 
-    public HashMap<Integer, Epic> getEpics() {
-        return epics;
+    public ArrayList<Epic> getEpics() {
+        ArrayList<Epic> epicList = new ArrayList<>();
+        for (Epic epic : epics.values()) {
+            epicList.add(epic);
+        }
+        return epicList;
     }
 
-    public HashMap<Integer, Subtask> getSubtasks() {
-        return subtasks;
+    public ArrayList<Subtask> getSubtasks() {
+        ArrayList<Subtask> subtaskList = new ArrayList<>();
+        for (Subtask subtask : subtasks.values()) {
+            subtaskList.add(subtask);
+        }
+        return subtaskList;
     }
 
     public void clearTasks() {
