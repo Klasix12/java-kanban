@@ -1,6 +1,7 @@
 package service;
 
 import model.Epic;
+import model.Status;
 import model.Subtask;
 import model.Task;
 
@@ -8,16 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TaskManager {
-    private final HashMap<Integer, Task> tasks;
-    private final HashMap<Integer, Epic> epics;
-    private final HashMap<Integer, Subtask> subtasks;
+    private final HashMap<Integer, Task> tasks = new HashMap<>();;
+    private final HashMap<Integer, Epic> epics = new HashMap<>();;
+    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();;
     private int taskId;
-
-    TaskManager() {
-        tasks = new HashMap<>();
-        epics = new HashMap<>();
-        subtasks = new HashMap<>();
-    }
 
     public HashMap<Integer, Task> getTasks() {
         return tasks;
