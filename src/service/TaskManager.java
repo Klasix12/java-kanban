@@ -49,6 +49,9 @@ public class TaskManager {
     }
 
     public void clearSubtasks() {
+        for (Epic epic : epics.values()) {
+            epic.setStatus(Status.NEW);
+        }
         subtasks.clear();
     }
 
