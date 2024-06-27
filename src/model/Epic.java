@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Epic extends Task {
     private final ArrayList<Subtask> subtasks;
@@ -27,5 +28,10 @@ public class Epic extends Task {
                 ", id=" + id +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, id, status, subtasks);
     }
 }
