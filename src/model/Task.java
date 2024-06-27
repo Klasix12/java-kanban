@@ -1,3 +1,5 @@
+package model;
+
 public class Task {
     protected final String name;
     protected String description;
