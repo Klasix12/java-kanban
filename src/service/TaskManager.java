@@ -127,7 +127,11 @@ public class TaskManager {
     }
 
     public ArrayList<Subtask> getEpicSubtasks(Epic epic) {
-        return epic.getSubtasks();
+        ArrayList<Subtask> subtasks = new ArrayList<>();
+        for (Subtask subtask : epic.getSubtasks()) {
+            subtasks.add(subtask);
+        }
+        return subtasks;
     }
 
     private void updateEpicStatus(Epic epic) {
