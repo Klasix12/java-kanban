@@ -35,5 +35,5 @@ public interface TaskManager {
 
     void removeSubtaskById(int id);
 
-    ArrayList<Subtask> getEpicSubtasks(Epic epic);
+    ArrayList<Subtask> getEpicSubtasksByEpicId(int id);
 }
