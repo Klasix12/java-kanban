@@ -74,21 +74,27 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addTask(Task task) {
-        task.setId(taskId);
-        tasks.put(taskId++, task);
-        return task.getId();
+        if (task != null) {
+            task.setId(taskId);
+            tasks.put(taskId++, task);
+            return task.getId();
+        }
+        return -1;
     }
 
     @Override
     public int addEpic(Epic epic) {
-        epic.setId(taskId);
-        epics.put(taskId++, epic);
-        return epic.getId();
+        if (epic != null) {
+            epic.setId(taskId);
+            epics.put(taskId++, epic);
+            return epic.getId();
+        }
+        return -1;
     }
 
     @Override
     public int addSubtask(Subtask subtask) {
-        if (epics.containsKey(subtask.getEpicId())) {
+        if (subtask != null && epics.containsKey(subtask.getEpicId())) {
             subtask.setId(taskId);
             subtasks.put(taskId++, subtask);
             epics.get(subtask.getEpicId()).addSubtask(subtask.getId());
@@ -100,14 +106,14 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task) {
-        if (tasks.containsKey(task.getId())) {
+        if (task != null && tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
         }
     }
 
     @Override
     public void updateEpic(Epic epic) {
-        if (epics.containsKey(epic.getId())){
+        if (epic != null && epics.containsKey(epic.getId())) {
             epics.put(epic.getId(), epic);
             updateEpicStatus(epic.getId());
         }
@@ -115,7 +121,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubtask(Subtask subtask) {
-        if (subtasks.containsKey(subtask.getId())) {
+        if (subtask != null && subtasks.containsKey(subtask.getId())) {
             subtasks.put(subtask.getId(), subtask);
             updateEpicStatus(subtask.getEpicId());
         }
