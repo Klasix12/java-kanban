@@ -2,25 +2,23 @@ import model.Epic;
 import model.Status;
 import model.Subtask;
 import model.Task;
-import service.TaskManager;
-
-import java.util.ArrayList;
+import service.InMemoryTaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         Task task1 = new Task("Погулять", "Дойти до набережной");
         Task task2 = new Task("Вынести мусор", "");
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        System.out.println(taskManager.getTasks());
+        inMemoryTaskManager.addTask(task1);
+        inMemoryTaskManager.addTask(task2);
+        System.out.println(inMemoryTaskManager.getTasks());
         task1.setStatus(Status.DONE);
         task2.setStatus(Status.IN_PROGRESS);
-        taskManager.updateTask(task1);
-        System.out.println(taskManager.getTasks());
-        taskManager.removeTaskById(0);
-        System.out.println(taskManager.getTasks());
+        inMemoryTaskManager.updateTask(task1);
+        System.out.println(inMemoryTaskManager.getTasks());
+        inMemoryTaskManager.removeTaskById(0);
+        System.out.println(inMemoryTaskManager.getTasks());
         System.out.println();
 
 
@@ -30,21 +28,21 @@ public class Main {
         Epic apartmentRenovation = new Epic("Сделать ремонт", "");
         Subtask apartmentRenovationSubtask = new Subtask(
                 "Поклеить обои", "Поклеить обои в коридоре", apartmentRenovation);
-        taskManager.addEpic(apartmentRenovation);
-        taskManager.addSubtask(apartmentRenovationSubtask);
-        taskManager.addEpic(shopping);
-        taskManager.addSubtask(shoppingSubtask1);
-        taskManager.addSubtask(shoppingSubtask2);
-        System.out.println(taskManager.getEpics());
-        System.out.println(taskManager.getSubtasks());
+        inMemoryTaskManager.addEpic(apartmentRenovation);
+        inMemoryTaskManager.addSubtask(apartmentRenovationSubtask);
+        inMemoryTaskManager.addEpic(shopping);
+        inMemoryTaskManager.addSubtask(shoppingSubtask1);
+        inMemoryTaskManager.addSubtask(shoppingSubtask2);
+        System.out.println(inMemoryTaskManager.getEpics());
+        System.out.println(inMemoryTaskManager.getSubtasks());
         shoppingSubtask1.setStatus(Status.DONE);
-        taskManager.updateSubtask(shoppingSubtask1);
-        System.out.println(taskManager.getEpics());
-        taskManager.removeSubtaskById(6);
-        System.out.println(taskManager.getEpics());
-        System.out.println(taskManager.getSubtasks());
-        taskManager.removeEpicById(2);
-        System.out.println(taskManager.getEpics());
-        System.out.println(taskManager.getSubtasks());
+        inMemoryTaskManager.updateSubtask(shoppingSubtask1);
+        System.out.println(inMemoryTaskManager.getEpics());
+        inMemoryTaskManager.removeSubtaskById(6);
+        System.out.println(inMemoryTaskManager.getEpics());
+        System.out.println(inMemoryTaskManager.getSubtasks());
+        inMemoryTaskManager.removeEpicById(2);
+        System.out.println(inMemoryTaskManager.getEpics());
+        System.out.println(inMemoryTaskManager.getSubtasks());
     }
 }
