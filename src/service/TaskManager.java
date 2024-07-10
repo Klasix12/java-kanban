@@ -38,4 +38,6 @@ public interface TaskManager {
     ArrayList<Subtask> getEpicSubtasksByEpicId(int epicId);
 
     ArrayList<Task> getHistory();
+
+    HistoryManager getHistoryManager();
 }
