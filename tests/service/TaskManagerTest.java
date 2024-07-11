@@ -138,6 +138,14 @@ public class TaskManagerTest {
     }
 
     @Test
+    public void testSubtasksDeletedWhenEpicsDeleted() {
+        final int epicId = taskManager.addEpic(epic);
+        taskManager.addSubtask(new Subtask("subtask", "", epicId));
+        taskManager.clearEpics();
+        assertTrue(taskManager.getSubtasks().isEmpty());
+    }
+
+    @Test
     public void testGeneratedAndSetIdDoNotConflict() {
         final int taskId = taskManager.addTask(task);
 
