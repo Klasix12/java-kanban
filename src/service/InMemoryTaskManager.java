@@ -172,11 +172,6 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
-    @Override
-    public HistoryManager getHistoryManager() {
-        return historyManager;
-    }
-
     private int generateId() {
         return ++taskId;
     }
