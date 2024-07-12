@@ -3,9 +3,10 @@ package service;
 import model.Task;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final ArrayList<Task> history = new ArrayList<>();
+    private final LinkedList<Task> history = new LinkedList<>();
     private static final int HISTORY_SIZE = 10;
 
     @Override
