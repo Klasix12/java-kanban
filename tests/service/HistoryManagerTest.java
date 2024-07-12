@@ -8,13 +8,12 @@ import util.Managers;
 
 public class HistoryManagerTest {
     static TaskManager taskManager;
-    static HistoryManager historyManager;
+    final static int HISTORY_SIZE = 10;
     static Task task;
 
     @BeforeEach
     public void createTaskManager() {
         taskManager = Managers.getDefault();
-        historyManager = taskManager.getHistoryManager();
         task = new Task("task", "");
     }
 
@@ -22,7 +21,7 @@ public class HistoryManagerTest {
     public void testHistoryManagerAddTask() {
         final int taskId = taskManager.addTask(task);
         taskManager.getTaskById(taskId);
-        Assertions.assertEquals(1, historyManager.getHistory().size());
+        Assertions.assertEquals(1, taskManager.getHistory().size());
     }
 
     @Test
@@ -39,6 +38,6 @@ public class HistoryManagerTest {
         for (int i = 0; i < 20; i++) {
             taskManager.getTaskById(taskId);
         }
-        Assertions.assertEquals(historyManager.getHistorySize(), historyManager.getHistory().size());
+        Assertions.assertEquals(HISTORY_SIZE, taskManager.getHistory().size());
     }
 }
