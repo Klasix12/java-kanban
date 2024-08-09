@@ -177,7 +177,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void updateEpicStatus(int epicId) {
-        epics.get(epicId).setStatus(calculateStatus(getEpicSubtasksByEpicId(epicId)));
+        Status status = calculateStatus(getEpicSubtasksByEpicId(epicId));
+        epics.get(epicId).setStatus(status);
     }
 
     private Status calculateStatus(ArrayList<Subtask> epicSubtasks) {
