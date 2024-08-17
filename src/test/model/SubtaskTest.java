@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SubtaskTest {
     Epic epic;
+
     @BeforeEach
     public void createEpic() {
         epic = new Epic(123, "epic", "");
