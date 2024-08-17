@@ -1,9 +1,8 @@
 package model;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class TaskTest {
     @Test
@@ -16,7 +15,7 @@ public class TaskTest {
         assertEquals(taskId, task.getId());
         assertEquals(taskName, task.getName());
         assertEquals(taskDesc, task.getDescription());
-        Assertions.assertEquals(Status.NEW, task.getStatus());
+        assertEquals(Status.NEW, task.getStatus());
     }
 
     @Test
