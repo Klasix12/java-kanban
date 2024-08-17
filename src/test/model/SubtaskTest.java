@@ -1,5 +1,9 @@
-package model;
+package test.model;
 
+import model.Epic;
+import model.Status;
+import model.Subtask;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +26,7 @@ public class SubtaskTest {
         assertEquals(subtaskId, subtask.getId());
         assertEquals(subtaskName, subtask.getName());
         assertEquals(subtaskDesc, subtask.getDescription());
-        assertEquals(Status.NEW, subtask.getStatus());
+        Assertions.assertEquals(Status.NEW, subtask.getStatus());
         assertEquals(epic.getId(), subtask.getEpicId());
     }
 

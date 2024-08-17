@@ -1,4 +1,4 @@
-package service;
+package test.service;
 
 import model.Epic;
 import model.Status;
@@ -6,6 +6,7 @@ import model.Subtask;
 import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import service.TaskManager;
 import util.Managers;
 
 import java.util.ArrayList;
