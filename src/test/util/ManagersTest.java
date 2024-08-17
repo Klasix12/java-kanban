@@ -1,12 +1,11 @@
-package test.util;
-
-import static org.junit.jupiter.api.Assertions.*;
+package util;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import service.InMemoryHistoryManager;
 import service.InMemoryTaskManager;
-import util.Managers;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ManagersTest {
     @Test

@@ -1,14 +1,11 @@
-package test.model;
+package model;
 
-import model.Epic;
-import model.Status;
-import model.Subtask;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EpicTest{
+public class EpicTest {
     @Test
     public void testEpicHasAllFieldsAndStatusNewWhenCreated() {
         final int epicId = 123;

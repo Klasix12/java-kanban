@@ -1,4 +1,4 @@
-package test.service;
+package service;
 
 import model.Epic;
 import model.Status;
@@ -6,7 +6,6 @@ import model.Subtask;
 import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import service.TaskManager;
 import util.Managers;
 
 import java.util.ArrayList;
@@ -115,7 +114,7 @@ public class TaskManagerTest {
 
     @Test
     public void testTaskManagerAssignsCorrectStatusToEpic() {
-        final int epicId =  taskManager.addEpic(epic);
+        final int epicId = taskManager.addEpic(epic);
 
         Subtask subtask = new Subtask("subtask", "", epicId);
         taskManager.addSubtask(subtask);
@@ -146,7 +145,7 @@ public class TaskManagerTest {
     public void testGeneratedAndSetIdDoNotConflict() {
         final int taskId = taskManager.addTask(task);
 
-        Task task1 = new Task(taskId,"task1", "");
+        Task task1 = new Task(taskId, "task1", "");
         final int task1Id = taskManager.addTask(task1);
         assertEquals(task1Id, task1.getId());
     }
