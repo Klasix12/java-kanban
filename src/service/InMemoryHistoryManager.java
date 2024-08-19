@@ -5,6 +5,7 @@ import model.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private static class Node<T> {
@@ -83,6 +84,13 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (node != null) {
             removeNode(node);
             history.remove(id);
+        }
+    }
+
+    @Override
+    public void remove(Set<Integer> ids) {
+        for (int id : ids) {
+            remove(id);
         }
     }
 }
