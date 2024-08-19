@@ -7,24 +7,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private static class Node {
-        Node next;
-        Task task;
-        Node prev;
+    private static class Node<T> {
+        Node<T> next;
+        T value;
+        Node<T> prev;
 
-        private Node(Node next, Task task, Node prev) {
+        private Node(Node<T> next, T value, Node<T> prev) {
             this.next = next;
-            this.task = task;
+            this.value = value;
             this.prev = prev;
         }
     }
 
-    private final Map<Integer, Node> history = new HashMap<>();
-    private Node start;
-    private Node tail;
+    private final Map<Integer, Node<Task>> history = new HashMap<>();
+    private Node<Task> start;
+    private Node<Task> tail;
 
     private void linkLast(Task task) {
-        Node node = new Node(null, task, tail);
+        Node<Task> node = new Node<>(null, task, tail);
         if (start == null) {
             start = node;
         } else {
@@ -35,9 +35,9 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
 
-    private void removeNode(Node node) {
-        final Node next = node.next;
-        final Node prev = node.prev;
+    private void removeNode(Node<Task> node) {
+        final Node<Task> next = node.next;
+        final Node<Task> prev = node.prev;
 
         if (prev == null) {
             start = next;
@@ -53,10 +53,10 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private ArrayList<Task> getTasks() {
-        Node node = start;
+        Node<Task> node = start;
         ArrayList<Task> tasks = new ArrayList<>();
         while (node != null) {
-            tasks.add(node.task);
+            tasks.add(node.value);
             node = node.next;
         }
         return tasks;
@@ -77,7 +77,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        Node node = history.get(id);
+        Node<Task> node = history.get(id);
         if (node != null) {
             removeNode(node);
             history.remove(id);
