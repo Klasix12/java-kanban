@@ -64,10 +64,12 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        if (history.get(task.getId()) != null) {
-            remove(task.getId());
+        if (task != null) {
+            if (history.get(task.getId()) != null) {
+                remove(task.getId());
+            }
+            linkLast(task);
         }
-        linkLast(task);
     }
 
     @Override
