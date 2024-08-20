@@ -1,5 +1,6 @@
 package service;
 
+import exception.ManagerLoadException;
 import exception.ManagerSaveException;
 import model.Epic;
 import model.Status;
@@ -114,7 +115,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 fileBackedTaskManager.addTaskFromString(line);
             }
         } catch (IOException e) {
-            throw new ManagerSaveException();
+            throw new ManagerLoadException("Ошибка при загрузке из файла.");
         }
         return fileBackedTaskManager;
     }
