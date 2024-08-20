@@ -1,10 +1,11 @@
 package model;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EpicTest{
+public class EpicTest {
     @Test
     public void testEpicHasAllFieldsAndStatusNewWhenCreated() {
         final int epicId = 123;
@@ -15,7 +16,7 @@ public class EpicTest{
         assertEquals(epicId, epic.getId());
         assertEquals(epicName, epic.getName());
         assertEquals(epicDesc, epic.getDescription());
-        assertEquals(Status.NEW, epic.getStatus());
+        Assertions.assertEquals(Status.NEW, epic.getStatus());
     }
 
     @Test

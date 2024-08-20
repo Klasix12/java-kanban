@@ -1,70 +1,67 @@
 import model.Epic;
-import model.Status;
 import model.Subtask;
 import model.Task;
-import service.HistoryManager;
 import service.TaskManager;
 import util.Managers;
+
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager manager = Managers.getDefault();
-        Task task = new Task("task", "");
-        Task task1 = new Task("task1", "");
-        manager.addTask(task);
-        manager.addTask(task1);
+        TaskManager taskManager = Managers.getDefault();
 
-        Epic epic = new Epic("epic", "");
-        Epic epic1 = new Epic("epic1", "");
-        int epicId = manager.addEpic(epic);
-        int epic1Id = manager.addEpic(epic1);
-        Subtask subtask = new Subtask("subtask", "", epicId);
-        Subtask subtask1 = new Subtask("subtask1", "", epicId);
-        Subtask subtask2 = new Subtask("subtask2", "", epic1Id);
-        manager.addSubtask(subtask);
-        manager.addSubtask(subtask1);
-        manager.addSubtask(subtask2);
+        Task task1 = new Task("task 1", "");
+        Task task2 = new Task("task 2", "");
+        final int task1Id = taskManager.addTask(task1);
+        final int task2Id = taskManager.addTask(task2);
 
-        printAllTasks(manager);
+        Epic epic1 = new Epic("epic 1", "");
+        Epic epic2 = new Epic("epic 2", "");
+        final int epic1Id = taskManager.addEpic(epic1);
+        final int epic2Id = taskManager.addEpic(epic2);
 
-        subtask1.setStatus(Status.IN_PROGRESS);
-        manager.updateSubtask(subtask1);
+        Subtask subtask1 = new Subtask("subtask 1", "", epic1Id);
+        Subtask subtask2 = new Subtask("subtask 2", "", epic1Id);
+        Subtask subtask3 = new Subtask("subtask 3", "", epic1Id);
+        final int subtask1Id = taskManager.addSubtask(subtask1);
+        final int subtask2Id = taskManager.addSubtask(subtask2);
+        final int subtask3Id = taskManager.addSubtask(subtask3);
 
-        System.out.println("-".repeat(30));
-        printAllTasks(manager);
+        taskManager.getTaskById(task1Id);
+        taskManager.getTaskById(task2Id);
+        taskManager.getEpicById(epic1Id);
+        taskManager.getEpicById(epic2Id);
+        taskManager.getSubtaskById(subtask1Id);
+        taskManager.getSubtaskById(subtask2Id);
+        taskManager.getSubtaskById(subtask3Id);
 
-        manager.clearSubtasks();
-        printAllTasks(manager);
+        printHistory(taskManager.getHistory());
 
-        for (int i = 0; i < 10; i++) {
-            manager.getEpicById(3);
-        }
+        taskManager.getTaskById(task2Id);
+        taskManager.getTaskById(task2Id);
+        taskManager.getTaskById(task2Id);
+        taskManager.getTaskById(task1Id);
+        taskManager.getTaskById(task1Id);
+        taskManager.getTaskById(task1Id);
 
-        printAllTasks(manager);
+        printHistory(taskManager.getHistory());
+
+        taskManager.getEpicById(epic1Id);
+        taskManager.getEpicById(epic2Id);
+
+        printHistory(taskManager.getHistory());
+
+        taskManager.removeTaskById(task1Id);
+        taskManager.removeEpicById(epic1Id);
+
+        printHistory(taskManager.getHistory());
     }
 
-    private static void printAllTasks(TaskManager manager) {
-        System.out.println("Задачи:");
-        for (Task task : manager.getTasks()) {
+    private static void printHistory(ArrayList<Task> history) {
+        for (Task task : history) {
             System.out.println(task);
         }
-        System.out.println("Эпики:");
-        for (Task epic : manager.getEpics()) {
-            System.out.println(epic);
-
-            for (Task task : manager.getEpicSubtasksByEpicId(epic.getId())) {
-                System.out.println("--> " + task);
-            }
-        }
-        System.out.println("Подзадачи:");
-        for (Task subtask : manager.getSubtasks()) {
-            System.out.println(subtask);
-        }
-
-        System.out.println("История:");
-        for (Task task : manager.getHistory()) {
-            System.out.println(task);
-        }
+        System.out.println("-".repeat(20));
     }
 }
