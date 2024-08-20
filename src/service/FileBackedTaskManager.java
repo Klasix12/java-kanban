@@ -163,7 +163,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 writer.write("\n");
             }
         } catch (IOException e) {
-            throw new ManagerSaveException();
+            throw new ManagerSaveException("Ошибка при сохранении в файл.");
         }
     }
 
