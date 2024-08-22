@@ -124,9 +124,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         Task task = fromString(string);
         if (task != null) {
             switch (task.getClass().getSimpleName()) {
-                case "Task" -> super.addTask(task);
-                case "Epic" -> super.addEpic((Epic) task);
-                case "Subtask" -> super.addSubtask((Subtask) task);
+                case "Task" -> tasks.put(task.getId(), task);
+                case "Epic" -> epics.put(task.getId(),(Epic) task);
+                case "Subtask" -> subtasks.put(task.getId(), (Subtask) task);
             }
         }
     }
