@@ -15,7 +15,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Epic> epics = new HashMap<>();
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
     private final HistoryManager historyManager = Managers.getDefaultHistory();
-    protected int taskId;
+    protected int generatedId;
 
     @Override
     public ArrayList<Task> getTasks() {
@@ -181,7 +181,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private int generateId() {
-        return ++taskId;
+        return ++generatedId;
     }
 
     private void updateEpicStatus(int epicId) {
