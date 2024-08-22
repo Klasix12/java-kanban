@@ -114,6 +114,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 String line = reader.readLine();
                 fileBackedTaskManager.addTaskFromString(line);
             }
+            fileBackedTaskManager.addSubtasksToEpics();
         } catch (IOException e) {
             throw new ManagerLoadException("Ошибка при загрузке из файла.");
         }
@@ -131,6 +132,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 case "Task" -> tasks.put(taskId, task);
                 case "Epic" -> epics.put(taskId,(Epic) task);
                 case "Subtask" -> subtasks.put(taskId, (Subtask) task);
+            }
+        }
+    }
+
+    private void addSubtasksToEpics() {
+        for (Subtask subtask : subtasks.values()) {
+            Epic epic = epics.get(subtask.getEpicId());
+            if (epic != null) {
+                epic.addSubtask(subtask);
             }
         }
     }
@@ -220,6 +230,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private static void printTasks(FileBackedTaskManager fileBackedTaskManager) {
         for (Task task : fileBackedTaskManager.getAllTasks()) {
             System.out.println(task);
+            if (task.getClass().getSimpleName().equals("Epic")) {
+                Epic task1 = (Epic) task;
+                System.out.println(task1.getSubtasks());
+            }
         }
+        System.out.println(fileBackedTaskManager.generatedId);
     }
 }
