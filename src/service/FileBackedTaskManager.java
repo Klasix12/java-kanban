@@ -123,16 +123,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void addTaskFromString(String string) {
         Task task = fromString(string);
-        if (task != null) {
-            int taskId = task.getId();
-            if (taskId > generatedId) {
-                generatedId = task.getId();
-            }
-            switch (task.getClass().getSimpleName()) {
-                case "Task" -> tasks.put(taskId, task);
-                case "Epic" -> epics.put(taskId,(Epic) task);
-                case "Subtask" -> subtasks.put(taskId, (Subtask) task);
-            }
+        int taskId = task.getId();
+        if (taskId > generatedId) {
+            generatedId = task.getId();
+        }
+        switch (task.getClass().getSimpleName()) {
+            case "Task" -> tasks.put(taskId, task);
+            case "Epic" -> epics.put(taskId,(Epic) task);
+            case "Subtask" -> subtasks.put(taskId, (Subtask) task);
         }
     }
 
