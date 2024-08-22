@@ -164,7 +164,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 return new Subtask(id, name, description, status, epicId);
             }
             default -> {
-                return null;
+                throw new ManagerLoadException("Ошибка при получении задачи из строки.");
             }
         }
     }
