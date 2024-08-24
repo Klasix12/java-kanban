@@ -18,6 +18,13 @@ public class Task {
         this.id = id;
     }
 
+    public Task(int id, String name, String description, Status status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }
@@ -48,12 +55,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
-                '}';
+        return String.format("%s,%S,%s,%s,%s", id, getClass().getSimpleName(), name, status, description);
     }
 
     @Override
