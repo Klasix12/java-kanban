@@ -1,11 +1,14 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Task {
     protected int id;
     protected final String name;
     protected String description;
-
     protected Status status = Status.NEW;
+    protected int duration;
+    protected LocalDateTime startTime;
 
     public Task(String name, String description) {
         this.name = name;
@@ -51,6 +54,26 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plusMinutes(duration);
     }
 
     @Override
