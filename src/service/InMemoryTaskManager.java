@@ -220,14 +220,15 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean isValidTask(Task task) {
-        if (task.getStartTime() != null) {
-            for (Task prioritizedTask : prioritizedTasks) {
-                if (task.getId() == prioritizedTask.getId()) {
-                    continue;
-                }
-                if (isTasksHaveIntersection(task, prioritizedTask)) {
-                    return false;
-                }
+        if (task.getStartTime() == null) {
+            return false;
+        }
+        for (Task prioritizedTask : prioritizedTasks) {
+            if (task.getId() == prioritizedTask.getId()) {
+                continue;
+            }
+            if (isTasksHaveIntersection(task, prioritizedTask)) {
+                return false;
             }
         }
         return true;
