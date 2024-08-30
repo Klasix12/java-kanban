@@ -3,12 +3,13 @@ package service;
 import model.Epic;
 import model.Subtask;
 import model.Task;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Managers;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HistoryManagerTest {
     static TaskManager taskManager;
@@ -24,7 +25,7 @@ public class HistoryManagerTest {
     public void testHistoryManagerAddTask() {
         final int taskId = taskManager.addTask(task);
         taskManager.getTaskById(taskId);
-        Assertions.assertEquals(1, taskManager.getHistory().size());
+        assertEquals(1, taskManager.getHistory().size());
     }
 
     @Test
@@ -32,7 +33,7 @@ public class HistoryManagerTest {
         final int taskId = taskManager.addTask(task);
         taskManager.addTask(task);
         Task historyTask = taskManager.getTaskById(taskId);
-        Assertions.assertEquals(task, historyTask);
+        assertEquals(task, historyTask);
     }
 
     @Test
@@ -42,7 +43,7 @@ public class HistoryManagerTest {
         for (int i = 0; i < 20; i++) {
             taskManager.getTaskById(taskId);
         }
-        Assertions.assertEquals(1, taskManager.getHistory().size());
+        assertEquals(1, taskManager.getHistory().size());
     }
 
     @Test
@@ -55,7 +56,7 @@ public class HistoryManagerTest {
         taskManager.getTaskById(task2Id);
         taskManager.getTaskById(taskId);
         taskManager.clearTasks();
-        Assertions.assertTrue(taskManager.getHistory().isEmpty());
+        assertTrue(taskManager.getHistory().isEmpty());
     }
 
     @Test
@@ -85,7 +86,7 @@ public class HistoryManagerTest {
         taskManager.getSubtaskById(subtask4Id);
 
         taskManager.clearEpics();
-        Assertions.assertTrue(taskManager.getHistory().isEmpty());
+        assertTrue(taskManager.getHistory().isEmpty());
     }
 
     @Test
@@ -115,7 +116,7 @@ public class HistoryManagerTest {
         taskManager.getSubtaskById(subtask4Id);
 
         taskManager.clearSubtasks();
-        Assertions.assertEquals(2, taskManager.getHistory().size());
+        assertEquals(2, taskManager.getHistory().size());
     }
 
     @Test
@@ -145,7 +146,7 @@ public class HistoryManagerTest {
         taskManager.getSubtaskById(subtask4Id);
 
         taskManager.removeEpicById(epicId);
-        Assertions.assertEquals(3, taskManager.getHistory().size());
+        assertEquals(3, taskManager.getHistory().size());
     }
 
     @Test
@@ -164,7 +165,7 @@ public class HistoryManagerTest {
 
         List<Task> tasks = List.of(task, subtask, epic);
 
-        Assertions.assertIterableEquals(tasks, taskManager.getHistory());
+        assertIterableEquals(tasks, taskManager.getHistory());
     }
 
     @Test
@@ -185,6 +186,6 @@ public class HistoryManagerTest {
 
         List<Task> tasks = List.of(task);
 
-        Assertions.assertIterableEquals(tasks, taskManager.getHistory());
+        assertIterableEquals(tasks, taskManager.getHistory());
     }
 }

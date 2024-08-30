@@ -1,6 +1,5 @@
 package util;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import service.InMemoryHistoryManager;
 import service.InMemoryTaskManager;
@@ -13,7 +12,7 @@ public class ManagersTest {
         InMemoryTaskManager memoryTaskManager = new InMemoryTaskManager();
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
-        Assertions.assertEquals(Managers.getDefault().getClass(), memoryTaskManager.getClass());
+        assertEquals(Managers.getDefault().getClass(), memoryTaskManager.getClass());
         assertEquals(Managers.getDefaultHistory().getClass(), historyManager.getClass());
     }
 }

@@ -3,7 +3,6 @@ package service;
 import model.Epic;
 import model.Subtask;
 import model.Task;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -12,6 +11,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBackedTaskManager> {
     File tempFile;
@@ -29,9 +31,9 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
     @Test
     public void testFileManagerLoadEmptyFile() {
         taskManager = FileBackedTaskManager.loadFromFile(tempFile);
-        Assertions.assertTrue(taskManager.getTasks().isEmpty());
-        Assertions.assertTrue(taskManager.getSubtasks().isEmpty());
-        Assertions.assertTrue(taskManager.getEpics().isEmpty());
+        assertTrue(taskManager.getTasks().isEmpty());
+        assertTrue(taskManager.getSubtasks().isEmpty());
+        assertTrue(taskManager.getEpics().isEmpty());
     }
 
     @Test
@@ -48,7 +50,7 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
         int index = 0;
         reader.readLine();
         while (reader.ready()) {
-            Assertions.assertEquals(tasks.get(index).toString(), reader.readLine());
+            assertEquals(tasks.get(index).toString(), reader.readLine());
             index++;
         }
     }
@@ -74,9 +76,9 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
 
         FileBackedTaskManager fileManager2 = FileBackedTaskManager.loadFromFile(tempFile);
 
-        Assertions.assertEquals(taskManager.getTasks(), fileManager2.getTasks());
-        Assertions.assertEquals(taskManager.getEpics(), fileManager2.getEpics());
-        Assertions.assertEquals(taskManager.getSubtasks(), fileManager2.getSubtasks());
+        assertEquals(taskManager.getTasks(), fileManager2.getTasks());
+        assertEquals(taskManager.getEpics(), fileManager2.getEpics());
+        assertEquals(taskManager.getSubtasks(), fileManager2.getSubtasks());
 
     }
 
