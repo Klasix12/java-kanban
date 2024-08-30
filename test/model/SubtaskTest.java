@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SubtaskTest {
@@ -33,5 +36,21 @@ public class SubtaskTest {
         Subtask subtask1 = new Subtask(123, "subtask", "", epic.getId());
 
         assertEquals(subtask, subtask1);
+    }
+
+    @Test
+    public void testSubtaskCorrectCalculateDuration() {
+        Subtask subtask = new Subtask(
+                123,
+                "subtask", "",
+                Status.NEW,
+                60,
+                LocalDateTime.now(),
+                epic.getId()
+                );
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime endTime = now.plusMinutes(60);
+
+        assertEquals(endTime, subtask.getEndTime());
     }
 }

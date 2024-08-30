@@ -2,6 +2,8 @@ package model;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskTest {
@@ -24,5 +26,21 @@ public class TaskTest {
         Task task1 = new Task(123, "task1", "task desc");
 
         assertEquals(task, task1);
+    }
+
+    @Test
+    public void testTaskCorrectCalculateDuration() {
+        Task task = new Task(
+                123,
+                "task",
+                "task desc",
+                Status.NEW,
+                60,
+                LocalDateTime.now()
+        );
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime endTime = now.plusMinutes(60);
+
+        assertEquals(endTime, task.getEndTime());
     }
 }
