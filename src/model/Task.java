@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     protected int id;
@@ -9,6 +10,7 @@ public class Task {
     protected Status status = Status.NEW;
     protected int duration;
     protected LocalDateTime startTime;
+    public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd:MM:yy");
 
     public Task(String name, String description) {
         this.name = name;
@@ -95,7 +97,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%S,%s,%s,%s", id, getClass().getSimpleName(), name, status, description);
+        String startTime = getStartTime() == null ? "0" : DATE_TIME_FORMATTER.format(getStartTime());
+        return String.format("%s,%S,%s,%s,%s,%s,%s", id, getClass().getSimpleName(), name, status, description, startTime, duration);
     }
 
     @Override
