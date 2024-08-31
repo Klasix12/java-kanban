@@ -10,7 +10,7 @@ public class Task {
     protected Status status = Status.NEW;
     protected int duration;
     protected LocalDateTime startTime;
-    public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd:MM:yy");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd:MM:yy");
 
     public Task(String name, String description) {
         this.name = name;
