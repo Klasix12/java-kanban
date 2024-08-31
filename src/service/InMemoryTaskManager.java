@@ -251,7 +251,7 @@ public class InMemoryTaskManager implements TaskManager {
         return ++generatedId;
     }
 
-    private void updateEpicDuration(int epicId) {
+    protected void updateEpicDuration(int epicId) {
         Epic epic = getEpicById(epicId);
         List<Subtask> epicSubtasks = getEpicSubtasksByEpicId(epicId);
         LocalDateTime startTime = epic.getStartTime();
