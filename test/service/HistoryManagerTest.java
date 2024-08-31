@@ -32,7 +32,7 @@ public class HistoryManagerTest {
     public void testHistoryManagerReturnCorrectHistory() {
         final int taskId = taskManager.addTask(task);
         taskManager.addTask(task);
-        Task historyTask = taskManager.getTaskById(taskId);
+        Task historyTask = taskManager.getTaskById(taskId).get();
         assertEquals(task, historyTask);
     }
 

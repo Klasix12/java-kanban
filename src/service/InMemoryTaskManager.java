@@ -63,24 +63,24 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTaskById(int id) {
+    public Optional<Task> getTaskById(int id) {
         Task task = tasks.get(id);
         historyManager.add(task);
-        return task;
+        return Optional.ofNullable(task);
     }
 
     @Override
-    public Epic getEpicById(int id) {
+    public Optional<Epic> getEpicById(int id) {
         Epic epic = epics.get(id);
         historyManager.add(epic);
-        return epic;
+        return Optional.ofNullable(epic);
     }
 
     @Override
-    public Subtask getSubtaskById(int id) {
+    public Optional<Subtask> getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
         historyManager.add(subtask);
-        return subtask;
+        return Optional.ofNullable(subtask);
     }
 
     @Override
@@ -253,7 +253,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     protected void updateEpicDuration(int epicId) {
-        Epic epic = getEpicById(epicId);
+        Optional<Epic> epic = getEpicById(epicId);
+        if (epic.isEmpty()) {
+            return;
+        }
+
         List<Subtask> epicSubtasks = getEpicSubtasksByEpicId(epicId);
         LocalDateTime startTime = null;
         LocalDateTime endTime = null;
@@ -277,9 +281,9 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
 
-        epic.setStartTime(startTime);
-        epic.setEndTime(endTime);
-        epic.setDuration(duration);
+        epic.get().setStartTime(startTime);
+        epic.get().setEndTime(endTime);
+        epic.get().setDuration(duration);
     }
 
     private void updateEpicStatus(int epicId) {

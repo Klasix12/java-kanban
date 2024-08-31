@@ -35,9 +35,9 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         Subtask subtask = new Subtask("subtask", "", epicId);
         final int subtaskId = taskManager.addSubtask(subtask);
 
-        assertEquals(task, taskManager.getTaskById(taskId));
-        assertEquals(epic, taskManager.getEpicById(epicId));
-        assertEquals(subtask, taskManager.getSubtaskById(subtaskId));
+        assertEquals(task, taskManager.getTaskById(taskId).get());
+        assertEquals(epic, taskManager.getEpicById(epicId).get());
+        assertEquals(subtask, taskManager.getSubtaskById(subtaskId).get());
     }
 
     @Test
@@ -61,14 +61,14 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
     @Test
     public void testTaskManagerReturnCorrectAnyTaskById() {
         final int taskId = taskManager.addTask(task);
-        assertEquals(task, taskManager.getTaskById(taskId));
+        assertEquals(task, taskManager.getTaskById(taskId).get());
 
         final int epicId = taskManager.addEpic(epic);
-        assertEquals(epic, taskManager.getEpicById(epicId));
+        assertEquals(epic, taskManager.getEpicById(epicId).get());
 
         Subtask subtask = new Subtask("subtask", "", epicId);
         final int subtaskId = taskManager.addSubtask(subtask);
-        assertEquals(subtask, taskManager.getSubtaskById(subtaskId));
+        assertEquals(subtask, taskManager.getSubtaskById(subtaskId).get());
     }
 
     @Test
@@ -76,7 +76,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         taskManager.addTask(task);
         task.setStatus(Status.DONE);
         taskManager.updateTask(task);
-        assertEquals(task.getStatus(), taskManager.getTaskById(task.getId()).getStatus());
+        assertEquals(task.getStatus(), taskManager.getTaskById(task.getId()).get().getStatus());
     }
 
     @Test
@@ -108,7 +108,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
 
         ArrayList<Subtask> subtasks = new ArrayList<>();
         for (int subtaskId : epic.getSubtasks()) {
-            subtasks.add(taskManager.getSubtaskById(subtaskId));
+            subtasks.add(taskManager.getSubtaskById(subtaskId).get());
         }
 
         assertEquals(subtasks, taskManager.getEpicSubtasksByEpicId(epicId));
