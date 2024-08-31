@@ -30,6 +30,13 @@ public class Task {
         this.status = status;
     }
 
+    public Task(String name, String description, int duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
     public Task(String name, String description, Status status, int duration, LocalDateTime startTime) {
         this.name = name;
         this.description = description;
