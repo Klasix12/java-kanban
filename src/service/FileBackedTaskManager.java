@@ -152,7 +152,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private Task fromString(String value) {
-        System.out.println(value);
         String[] fields = value.split(",");
         int id = Integer.parseInt(fields[0]);
         String taskType = fields[1];
