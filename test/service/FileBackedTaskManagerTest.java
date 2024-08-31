@@ -79,7 +79,7 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
     }
 
     @Test
-    public void testFileManagerThrowException() throws IOException {
+    public void testFileManagerThrowException() {
         assertThrows(ManagerLoadException.class, () -> {
             try (Writer writer = new BufferedWriter(new FileWriter(tempFile, StandardCharsets.UTF_8))) {
                 writer.write("asdasd\n");

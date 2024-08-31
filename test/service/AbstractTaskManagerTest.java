@@ -158,11 +158,11 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         task.setDuration(60);
         final int taskId = taskManager.addTask(task);
 
-        Task task2 = new Task(taskId+1, "task1", "task1 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 0, 30, 0));
+        Task task2 = new Task(taskId + 1, "task1", "task1 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 0, 30, 0));
         taskManager.addTask(task2);
         assertEquals(1, taskManager.getPrioritizedTasks().size());
 
-        Task task3 = new Task(task2.getId()+1, "task2", "task2 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 10, 0, 0));
+        Task task3 = new Task(task2.getId() + 1, "task2", "task2 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 10, 0, 0));
         taskManager.addTask(task3);
         assertEquals(2, taskManager.getPrioritizedTasks().size());
         assertEquals(3, taskManager.getTasks().size());
@@ -170,7 +170,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testEpicHasCorrectStartFinishAndDurationTime() {
-        Epic epic = new Epic("epic","description");
+        Epic epic = new Epic("epic", "description");
 
         final int epicId = taskManager.addEpic(epic);
 
@@ -179,7 +179,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         taskManager.addSubtask(subtask);
 
         LocalDateTime subtask1StartTime = LocalDateTime.of(2024, 10, 10, 0, 30, 0);
-        Subtask subtask1 = new Subtask("subtask1", "desc1", 60,subtask1StartTime , epicId);
+        Subtask subtask1 = new Subtask("subtask1", "desc1", 60, subtask1StartTime, epicId);
         taskManager.addSubtask(subtask1);
 
         assertEquals(subtaskStartTime, epic.getStartTime());
