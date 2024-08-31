@@ -1,19 +1,16 @@
 package service;
 
+import exception.ManagerLoadException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBackedTaskManager> {
     File tempFile;
@@ -79,8 +76,16 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
         assertEquals(taskManager.getTasks(), fileManager2.getTasks());
         assertEquals(taskManager.getEpics(), fileManager2.getEpics());
         assertEquals(taskManager.getSubtasks(), fileManager2.getSubtasks());
-
     }
 
-
+    @Test
+    public void testFileManagerThrowException() throws IOException {
+        assertThrows(ManagerLoadException.class, () -> {
+            try (Writer writer = new BufferedWriter(new FileWriter(tempFile, StandardCharsets.UTF_8))) {
+                writer.write("asdasd\n");
+                writer.write("asdasd");
+            }
+            FileBackedTaskManager fileManager = FileBackedTaskManager.loadFromFile(tempFile);
+        });
+    }
 }
