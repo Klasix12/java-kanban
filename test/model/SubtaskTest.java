@@ -39,16 +39,16 @@ public class SubtaskTest {
 
     @Test
     public void testSubtaskCorrectCalculateDuration() {
+        LocalDateTime testTime = LocalDateTime.of(2024, 10, 8, 0, 0, 0);
         Subtask subtask = new Subtask(
                 123,
                 "subtask", "",
                 Status.NEW,
                 60,
-                LocalDateTime.now(),
+                testTime,
                 epic.getId()
         );
-        LocalDateTime now = LocalDateTime.of(2024, 10, 8, 0, 0, 0);
-        LocalDateTime endTime = now.plusMinutes(60);
+        LocalDateTime endTime = testTime.plusMinutes(60);
 
         assertEquals(endTime, subtask.getEndTime());
     }

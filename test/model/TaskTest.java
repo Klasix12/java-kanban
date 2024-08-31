@@ -30,16 +30,16 @@ public class TaskTest {
 
     @Test
     public void testTaskCorrectCalculateDuration() {
+        LocalDateTime testTime = LocalDateTime.of(2024, 10, 8, 0, 0, 0);
         Task task = new Task(
                 123,
                 "task",
                 "task desc",
                 Status.NEW,
                 60,
-                LocalDateTime.now()
+                testTime
         );
-        LocalDateTime now = LocalDateTime.of(2024, 10, 8, 0, 0, 0);
-        LocalDateTime endTime = now.plusMinutes(60);
+        LocalDateTime endTime = testTime.plusMinutes(60);
 
         assertEquals(endTime, task.getEndTime());
     }
