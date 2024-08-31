@@ -177,6 +177,7 @@ public class InMemoryTaskManager implements TaskManager {
             historyManager.remove(id);
             updateEpicStatus(epic.getId());
             removeTaskFromPrioritizedTasksById(id);
+            updateEpicDuration(epic.getId());
         }
     }
 
@@ -254,8 +255,8 @@ public class InMemoryTaskManager implements TaskManager {
     protected void updateEpicDuration(int epicId) {
         Epic epic = getEpicById(epicId);
         List<Subtask> epicSubtasks = getEpicSubtasksByEpicId(epicId);
-        LocalDateTime startTime = epic.getStartTime();
-        LocalDateTime endTime = epic.getEndTime();
+        LocalDateTime startTime = null;
+        LocalDateTime endTime = null;
         int duration = 0;
 
         for (Subtask subtask : epicSubtasks) {
