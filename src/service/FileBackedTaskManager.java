@@ -9,6 +9,7 @@ import model.Task;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -115,6 +116,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 fileBackedTaskManager.addTaskFromString(line);
             }
             fileBackedTaskManager.addSubtasksToEpics();
+            fileBackedTaskManager.updateEpicsDuration();
         } catch (IOException e) {
             throw new ManagerLoadException("Ошибка при загрузке из файла.");
         }
@@ -143,23 +145,32 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
+    private void updateEpicsDuration() {
+        for (Epic epic : epics.values()) {
+            updateEpicDuration(epic.getId());
+        }
+    }
+
     private Task fromString(String value) {
+        System.out.println(value);
         String[] fields = value.split(",");
         int id = Integer.parseInt(fields[0]);
         String taskType = fields[1];
         String name = fields[2];
         Status status = Status.valueOf(fields[3]);
         String description = fields[4];
+        LocalDateTime startTime = fields[5].equals("0") ? null : LocalDateTime.parse(fields[5], Task.DATE_TIME_FORMATTER);
+        int duration = Integer.parseInt(fields[6]);
         switch (taskType) {
             case "TASK" -> {
-                return new Task(id, name, description, status);
+                return new Task(id, name, description, status, duration, startTime);
             }
             case "EPIC" -> {
-                return new Epic(id, name, description, status);
+                return new Epic(id, name, description, status, duration, startTime);
             }
             case "SUBTASK" -> {
-                int epicId = Integer.parseInt(fields[5]);
-                return new Subtask(id, name, description, status, epicId);
+                int epicId = Integer.parseInt(fields[7]);
+                return new Subtask(id, name, description, status, duration, startTime, epicId);
             }
             default -> {
                 throw new ManagerLoadException("Ошибка при получении задачи из строки.");
