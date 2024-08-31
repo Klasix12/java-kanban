@@ -117,7 +117,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
             fileBackedTaskManager.addSubtasksToEpics();
             fileBackedTaskManager.updateEpicsDuration();
-        } catch (IOException e) {
+        } catch (IOException | NumberFormatException e) {
             throw new ManagerLoadException("Ошибка при загрузке из файла.");
         }
         return fileBackedTaskManager;
