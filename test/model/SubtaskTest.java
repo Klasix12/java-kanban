@@ -47,7 +47,7 @@ public class SubtaskTest {
                 LocalDateTime.now(),
                 epic.getId()
         );
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2024, 10, 8, 0, 0, 0);
         LocalDateTime endTime = now.plusMinutes(60);
 
         assertEquals(endTime, subtask.getEndTime());
