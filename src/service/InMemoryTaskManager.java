@@ -115,11 +115,10 @@ public class InMemoryTaskManager implements TaskManager {
             subtask.setId(taskId);
             subtasks.put(taskId, subtask);
             epics.get(subtask.getEpicId()).addSubtask(subtask.getId());
-            updateEpicStatus(subtask.getEpicId());
             if (isValidTask(subtask)) {
                 addTaskToPrioritizedTasks(subtask);
             }
-            updateEpicDuration(subtask.getEpicId());
+            updateEpicDetails(subtask.getEpicId());
             return subtask.getId();
         }
         return -1;
@@ -139,8 +138,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateEpic(Epic epic) {
         if (epic != null && epics.containsKey(epic.getId())) {
             epics.put(epic.getId(), epic);
-            updateEpicStatus(epic.getId());
-            updateEpicDuration(epic.getId());
+            updateEpicDetails(epic.getId());
         }
     }
 
@@ -148,11 +146,10 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateSubtask(Subtask subtask) {
         if (subtask != null && subtasks.containsKey(subtask.getId()) && epics.containsKey(subtask.getEpicId())) {
             subtasks.put(subtask.getId(), subtask);
-            updateEpicStatus(subtask.getEpicId());
             if (isValidTask(subtask)) {
                 addTaskToPrioritizedTasks(subtask);
             }
-            updateEpicDuration(subtask.getEpicId());
+            updateEpicDetails(subtask.getEpicId());
         }
     }
 
@@ -183,9 +180,8 @@ public class InMemoryTaskManager implements TaskManager {
             epic.getSubtasks().remove((Integer) id);
             subtasks.remove(id);
             historyManager.remove(id);
-            updateEpicStatus(epic.getId());
             removeTaskFromPrioritizedTasksById(id);
-            updateEpicDuration(epic.getId());
+            updateEpicDetails(epic.getId());
         }
     }
 
@@ -256,6 +252,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     private int generateId() {
         return ++generatedId;
+    }
+
+    protected void updateEpicDetails(int epicId) {
+        updateEpicStatus(epicId);
+        updateEpicDuration(epicId);
     }
 
     protected void updateEpicDuration(int epicId) {
