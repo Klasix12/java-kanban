@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,7 +43,7 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
         taskManager.addTask(task3);
 
         BufferedReader reader = new BufferedReader(new FileReader(tempFile, StandardCharsets.UTF_8));
-        ArrayList<Task> tasks = taskManager.getTasks();
+        List<Task> tasks = taskManager.getTasks();
         int index = 0;
         reader.readLine();
         while (reader.ready()) {

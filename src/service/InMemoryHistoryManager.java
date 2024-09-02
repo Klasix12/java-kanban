@@ -2,10 +2,7 @@ package service;
 
 import model.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private static class Node<T> {
@@ -53,9 +50,9 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    private ArrayList<Task> getTasks() {
+    private List<Task> getTasks() {
         Node<Task> node = start;
-        ArrayList<Task> tasks = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
         while (node != null) {
             tasks.add(node.value);
             node = node.next;
@@ -74,7 +71,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
+    public List<Task> getHistory() {
         return getTasks();
     }
 
