@@ -23,7 +23,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
     @BeforeEach
     public void setTaskManager() {
         taskManager = createTaskManager();
-        task = new Task("task", "");
+        task = new Task("task", "", 60, LocalDateTime.of(2024, 10, 8, 0, 0, 0));
         epic = new Epic("epic", "");
     }
 
@@ -32,7 +32,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         final int taskId = taskManager.addTask(task);
         final int epicId = taskManager.addEpic(epic);
 
-        Subtask subtask = new Subtask("subtask", "", epicId);
+        Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
         final int subtaskId = taskManager.addSubtask(subtask);
 
         assertEquals(task, taskManager.getTaskById(taskId).get());
@@ -47,8 +47,8 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         taskManager.clearTasks();
         assertTrue(taskManager.getTasks().isEmpty());
 
-        taskManager.addEpic(epic);
-        Subtask subtask = new Subtask("subtask", "", epic.getId());
+        final int epicId = taskManager.addEpic(epic);
+        Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
         taskManager.addSubtask(subtask);
         assertEquals(1, taskManager.getEpics().size());
         assertEquals(1, taskManager.getSubtasks().size());
@@ -66,7 +66,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         final int epicId = taskManager.addEpic(epic);
         assertEquals(epic, taskManager.getEpicById(epicId).get());
 
-        Subtask subtask = new Subtask("subtask", "", epicId);
+        Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
         final int subtaskId = taskManager.addSubtask(subtask);
         assertEquals(subtask, taskManager.getSubtaskById(subtaskId).get());
     }
@@ -86,7 +86,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         assertTrue(taskManager.getTasks().isEmpty());
 
         final int epicId = taskManager.addEpic(epic);
-        final int subtaskId = taskManager.addSubtask(new Subtask("subtask", "", epicId));
+        final int subtaskId = taskManager.addSubtask(new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId));
         taskManager.removeSubtaskById(subtaskId);
         assertTrue(taskManager.getSubtasks().isEmpty());
         taskManager.removeEpicById(epicId);
@@ -97,13 +97,13 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
     public void testTaskManagerReturnCorrectEpicSubtasks() {
         final int epicId = taskManager.addEpic(epic);
         Epic epic1 = new Epic("epic1", "");
-        final int epic2Id = taskManager.addEpic(epic1);
+        taskManager.addEpic(epic1);
 
-        Subtask subtask = new Subtask("subtask", "", epicId);
+        Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
         taskManager.addSubtask(subtask);
-        Subtask subtask1 = new Subtask("subtask1", "", epicId);
+        Subtask subtask1 = new Subtask("subtask1", "", 60, LocalDateTime.of(2024, 10, 8, 2, 2, 0), epicId);
         taskManager.addSubtask(subtask1);
-        Subtask subtask2 = new Subtask("subtask2", "", epic2Id);
+        Subtask subtask2 = new Subtask("subtask2", "", 60, LocalDateTime.of(2024, 10, 8, 3, 3, 0), epicId);
         taskManager.addSubtask(subtask2);
 
         ArrayList<Subtask> subtasks = new ArrayList<>();
@@ -118,9 +118,9 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
     public void testTaskManagerAssignsCorrectStatusToEpic() {
         final int epicId = taskManager.addEpic(epic);
 
-        Subtask subtask = new Subtask("subtask", "", epicId);
+        Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
         taskManager.addSubtask(subtask);
-        Subtask subtask1 = new Subtask("subtask1", "", epicId);
+        Subtask subtask1 = new Subtask("subtask1", "", 60, LocalDateTime.of(2024, 10, 8, 2, 2, 0), epicId);
         taskManager.addSubtask(subtask1);
         assertEquals(Status.NEW, epic.getStatus());
 
@@ -138,7 +138,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
     @Test
     public void testSubtasksDeletedWhenEpicsDeleted() {
         final int epicId = taskManager.addEpic(epic);
-        taskManager.addSubtask(new Subtask("subtask", "", epicId));
+        taskManager.addSubtask(new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId));
         taskManager.clearEpics();
         assertTrue(taskManager.getSubtasks().isEmpty());
     }
@@ -147,25 +147,23 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
     public void testGeneratedAndSetIdDoNotConflict() {
         final int taskId = taskManager.addTask(task);
 
-        Task task1 = new Task(taskId, "task1", "");
+        Task task1 = new Task(taskId, "task2", "", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0));
         final int task1Id = taskManager.addTask(task1);
         assertEquals(task1Id, task1.getId());
     }
 
     @Test
     public void testTasksIntersection() {
-        task.setStartTime(LocalDateTime.of(2024, 10, 8, 0, 0, 0));
-        task.setDuration(60);
         final int taskId = taskManager.addTask(task);
 
-        Task task2 = new Task(taskId + 1, "task1", "task1 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 0, 30, 0));
+        Task task2 = new Task(taskId + 1, "task1", "task1 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 0, 0, 0));
         taskManager.addTask(task2);
         assertEquals(1, taskManager.getPrioritizedTasks().size());
 
-        Task task3 = new Task(task2.getId() + 1, "task2", "task2 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 10, 0, 0));
+        Task task3 = new Task(task2.getId() + 1, "task2", "task2 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 2, 2, 0));
         taskManager.addTask(task3);
         assertEquals(2, taskManager.getPrioritizedTasks().size());
-        assertEquals(3, taskManager.getTasks().size());
+        assertEquals(2, taskManager.getTasks().size());
     }
 
     @Test

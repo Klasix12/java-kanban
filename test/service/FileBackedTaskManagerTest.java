@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,9 +36,9 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
 
     @Test
     public void testFileManagerSaveFewTasks() throws IOException {
-        Task task1 = new Task("task 1", "description 1");
-        Task task2 = new Task("task 2", "description 2");
-        Task task3 = new Task("task 3", "description 3");
+        Task task1 = new Task("task 1", "description 1", 60, LocalDateTime.of(2024, 10, 8, 0, 0, 0));
+        Task task2 = new Task("task 2", "description 2", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0));
+        Task task3 = new Task("task 3", "description 3", 60, LocalDateTime.of(2024, 10, 8, 2, 2, 0));
         taskManager.addTask(task1);
         taskManager.addTask(task2);
         taskManager.addTask(task3);
@@ -53,10 +54,10 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
     }
 
     @Test
-    public void testFileManagerLoadFewTasks() throws IOException {
-        Task task1 = new Task("task 1", "description 1");
-        Task task2 = new Task("task 2", "description 2");
-        Task task3 = new Task("task 3", "description 3");
+    public void testFileManagerLoadFewTasks() {
+        Task task1 = new Task("task 1", "description 1", 60, LocalDateTime.of(2024, 10, 8, 0, 0, 0));
+        Task task2 = new Task("task 2", "description 2", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0));
+        Task task3 = new Task("task 3", "description 3", 60, LocalDateTime.of(2024, 10, 8, 2, 2, 0));
         taskManager.addTask(task1);
         taskManager.addTask(task2);
         taskManager.addTask(task3);
@@ -66,8 +67,8 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
         int epic1id = taskManager.addEpic(epic1);
         int epic2id = taskManager.addEpic(epic2);
 
-        Subtask subtask1 = new Subtask("Subtask1", "Subtask 1 description", epic1id);
-        Subtask subtask2 = new Subtask("Subtask2", "Subtask 2 description", epic2id);
+        Subtask subtask1 = new Subtask("Subtask1", "Subtask 1 description", 60, LocalDateTime.of(2024, 10, 8, 3, 3, 0), epic1id);
+        Subtask subtask2 = new Subtask("Subtask2", "Subtask 2 description", 60, LocalDateTime.of(2024, 10, 8, 4, 4, 0), epic2id);
         taskManager.addSubtask(subtask1);
         taskManager.addSubtask(subtask2);
 

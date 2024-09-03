@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Managers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +19,7 @@ public class HistoryManagerTest {
     @BeforeEach
     public void createTaskManager() {
         taskManager = Managers.getDefault();
-        task = new Task("task", "");
+        task = new Task("task", "", 60, LocalDateTime.of(2024, 10, 8, 0, 0, 0));
     }
 
     @Test
@@ -49,7 +50,7 @@ public class HistoryManagerTest {
     @Test
     public void testHistoryManagerIsEmptyWhenTasksDeleted() {
         final int taskId = taskManager.addTask(task);
-        Task task2 = new Task("task2", "");
+        Task task2 = new Task("task2", "", 60, LocalDateTime.of(2024, 10, 8, 2, 0, 0));
         final int task2Id = taskManager.addTask(task2);
         taskManager.addTask(task);
         taskManager.addTask(task2);
@@ -67,10 +68,10 @@ public class HistoryManagerTest {
         final int epicId = taskManager.addEpic(epic);
         final int epic2Id = taskManager.addEpic(epic2);
 
-        Subtask subtask = new Subtask("Subtask", "", epicId);
-        Subtask subtask2 = new Subtask("Subtask2", "", epicId);
-        Subtask subtask3 = new Subtask("Subtask3", "", epic2Id);
-        Subtask subtask4 = new Subtask("Subtask4", "", epic2Id);
+        Subtask subtask = new Subtask("Subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 0, 0), epicId);
+        Subtask subtask2 = new Subtask("Subtask2", "", 60, LocalDateTime.of(2024, 10, 8, 2, 1, 0), epicId);
+        Subtask subtask3 = new Subtask("Subtask3", "", 60, LocalDateTime.of(2024, 10, 8, 3, 2, 0), epic2Id);
+        Subtask subtask4 = new Subtask("Subtask4", "", 60, LocalDateTime.of(2024, 10, 8, 4, 3, 0), epic2Id);
 
         final int subtaskId = taskManager.addSubtask(subtask);
         final int subtask2Id = taskManager.addSubtask(subtask2);
@@ -97,10 +98,10 @@ public class HistoryManagerTest {
         final int epicId = taskManager.addEpic(epic);
         final int epic2Id = taskManager.addEpic(epic2);
 
-        Subtask subtask = new Subtask("Subtask", "", epicId);
-        Subtask subtask2 = new Subtask("Subtask2", "", epicId);
-        Subtask subtask3 = new Subtask("Subtask3", "", epic2Id);
-        Subtask subtask4 = new Subtask("Subtask4", "", epic2Id);
+        Subtask subtask = new Subtask("Subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 0, 0), epicId);
+        Subtask subtask2 = new Subtask("Subtask2", "", 60, LocalDateTime.of(2024, 10, 8, 2, 0, 0), epicId);
+        Subtask subtask3 = new Subtask("Subtask3", "", 60, LocalDateTime.of(2024, 10, 8, 3, 0, 0), epic2Id);
+        Subtask subtask4 = new Subtask("Subtask4", "", 60, LocalDateTime.of(2024, 10, 8, 4, 0, 0), epic2Id);
 
         final int subtaskId = taskManager.addSubtask(subtask);
         final int subtask2Id = taskManager.addSubtask(subtask2);
@@ -127,10 +128,10 @@ public class HistoryManagerTest {
         final int epicId = taskManager.addEpic(epic);
         final int epic2Id = taskManager.addEpic(epic2);
 
-        Subtask subtask = new Subtask("Subtask", "", epicId);
-        Subtask subtask2 = new Subtask("Subtask2", "", epicId);
-        Subtask subtask3 = new Subtask("Subtask3", "", epic2Id);
-        Subtask subtask4 = new Subtask("Subtask4", "", epic2Id);
+        Subtask subtask = new Subtask("Subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 0, 0), epicId);
+        Subtask subtask2 = new Subtask("Subtask2", "", 60, LocalDateTime.of(2024, 10, 8, 2, 1, 0), epicId);
+        Subtask subtask3 = new Subtask("Subtask3", "", 60, LocalDateTime.of(2024, 10, 8, 3, 2, 0), epic2Id);
+        Subtask subtask4 = new Subtask("Subtask4", "", 60, LocalDateTime.of(2024, 10, 8, 4, 3, 0), epic2Id);
 
         final int subtaskId = taskManager.addSubtask(subtask);
         final int subtask2Id = taskManager.addSubtask(subtask2);
@@ -156,7 +157,7 @@ public class HistoryManagerTest {
         Epic epic = new Epic("Epic", "");
         final int epicId = taskManager.addEpic(epic);
 
-        Subtask subtask = new Subtask("Subtask", "", epicId);
+        Subtask subtask = new Subtask("Subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
         final int subtaskId = taskManager.addSubtask(subtask);
 
         taskManager.getTaskById(taskId);
@@ -175,7 +176,7 @@ public class HistoryManagerTest {
         Epic epic = new Epic("Epic", "");
         final int epicId = taskManager.addEpic(epic);
 
-        Subtask subtask = new Subtask("Subtask", "", epicId);
+        Subtask subtask = new Subtask("Subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 0, 0), epicId);
         final int subtaskId = taskManager.addSubtask(subtask);
 
         taskManager.getTaskById(taskId);
