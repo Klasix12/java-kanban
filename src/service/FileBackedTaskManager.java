@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private String fileName = "tasks.csv";
-    private static final String FIELDS = "id,type,name,status,description,epic\n";
+    private static final String FIELDS = "id,type,name,status,description,duration,startTime,epicId\n";
 
     public FileBackedTaskManager() {
     }
