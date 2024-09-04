@@ -2,10 +2,7 @@ package service;
 
 import exception.ManagerLoadException;
 import exception.ManagerSaveException;
-import model.Epic;
-import model.Status;
-import model.Subtask;
-import model.Task;
+import model.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -116,7 +113,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 fileBackedTaskManager.addTaskFromString(line);
             }
             fileBackedTaskManager.addSubtasksToEpics();
-            fileBackedTaskManager.updateEpicsDuration();
         } catch (IOException | NumberFormatException e) {
             throw new ManagerLoadException("Ошибка при загрузке из файла.");
         }
@@ -142,12 +138,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             if (epic != null) {
                 epic.addSubtask(subtask);
             }
-        }
-    }
-
-    private void updateEpicsDuration() {
-        for (Epic epic : epics.values()) {
-            updateEpicDuration(epic.getId());
         }
     }
 
