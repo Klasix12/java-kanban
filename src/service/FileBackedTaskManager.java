@@ -125,6 +125,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         if (taskId > generatedId) {
             generatedId = task.getId();
         }
+        prioritizedTasks.add(task);
         switch (task.getClass().getSimpleName()) {
             case "Task" -> tasks.put(taskId, task);
             case "Epic" -> epics.put(taskId, (Epic) task);
