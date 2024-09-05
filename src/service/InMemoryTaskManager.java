@@ -86,19 +86,13 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addTask(Task task) {
-        if (task == null) {
+        if (task == null || !isValidTask(task)) {
             return -1;
         }
         final int taskId = generateId();
         task.setId(taskId);
-        if (task.getStartTime() == null) {
-            tasks.put(taskId, task);
-        } else if (isValidTask(task)) {
-            tasks.put(taskId, task);
-            addTaskToPrioritizedTasks(task);
-        } else {
-            return -1;
-        }
+        tasks.put(taskId, task);
+        addTaskToPrioritizedTasks(task);
         return taskId;
     }
 
