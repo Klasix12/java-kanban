@@ -1,11 +1,16 @@
 package model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Task {
     protected int id;
     protected final String name;
     protected String description;
-
     protected Status status = Status.NEW;
+    protected int duration;
+    protected LocalDateTime startTime;
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd.MM.yy");
 
     public Task(String name, String description) {
         this.name = name;
@@ -23,6 +28,30 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = status;
+    }
+
+    public Task(String name, String description, int duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    public Task(String name, String description, Status status, int duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    public Task(int id, String name, String description, Status status, int duration, LocalDateTime startTime) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     public int getId() {
@@ -53,9 +82,30 @@ public class Task {
         this.status = status;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plusMinutes(duration);
+    }
+
     @Override
     public String toString() {
-        return String.format("%s,%S,%s,%s,%s", id, getClass().getSimpleName(), name, status, description);
+        String startTime = getStartTime() == null ? "0" : DATE_TIME_FORMATTER.format(getStartTime());
+        return String.format("%s,%S,%s,%s,%s,%s,%s", id, getClass().getSimpleName(), name, status, description, startTime, duration);
     }
 
     @Override

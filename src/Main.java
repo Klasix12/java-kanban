@@ -4,7 +4,7 @@ import model.Task;
 import service.TaskManager;
 import util.Managers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -58,7 +58,7 @@ public class Main {
         printHistory(taskManager.getHistory());
     }
 
-    private static void printHistory(ArrayList<Task> history) {
+    private static void printHistory(List<Task> history) {
         for (Task task : history) {
             System.out.println(task);
         }
