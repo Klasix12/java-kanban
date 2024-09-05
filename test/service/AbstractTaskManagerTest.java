@@ -214,18 +214,42 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
     @Test
     public void testSubtasksAndEpicsListsHaveCorrectSize() {
         final int epicId = taskManager.addEpic(epic);
-        Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
+        Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 0, 0, 0), epicId);
         taskManager.addSubtask(subtask);
         Subtask subtask1 = new Subtask("subtask1", "", epicId);
         taskManager.addSubtask(subtask1);
 
         assertEquals(2, taskManager.getSubtasks().size());
-        assertEquals(1, taskManager.getPrioritizedTasks().size());
+        assertEquals(2, taskManager.getPrioritizedTasks().size());
 
         subtask.setStartTime(null);
         taskManager.updateSubtask(subtask);
 
-        assertEquals(0, taskManager.getPrioritizedTasks().size());
+        assertEquals(2, taskManager.getPrioritizedTasks().size());
         assertNull(taskManager.getEpicById(epicId).get().getEndTime());
+    }
+
+    @Test
+    public void testTasksHaveNotIntersectionIfSameStartTimeAndEndTime() {
+        taskManager.addTask(task);
+        Task task2 = new Task("task2", "", 60, task.getStartTime().plusMinutes(task.getDuration()));
+        taskManager.addTask(task2);
+        assertEquals(2, taskManager.getPrioritizedTasks().size());
+    }
+
+    @Test
+    public void testPrioritizedTasksHaveCorrectSizeWhenTasksUpdated() {
+        taskManager.addTask(task);
+        Epic epic = new Epic("epic", "epic desc");
+        final int epicId = taskManager.addEpic(epic);
+        Subtask subtask = new Subtask("name", "desc", epicId);
+        taskManager.addSubtask(subtask);
+
+        assertEquals(2, taskManager.getPrioritizedTasks().size());
+        task.setStartTime(LocalDateTime.of(2024, 10, 8, 0, 0, 0));
+        taskManager.updateTask(task);
+        subtask.setStartTime(LocalDateTime.of(2024, 10, 8, 0, 0, 0));
+        taskManager.updateSubtask(subtask);
+        assertEquals(2, taskManager.getPrioritizedTasks().size());
     }
 }

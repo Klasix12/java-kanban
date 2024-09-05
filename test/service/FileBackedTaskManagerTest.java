@@ -89,4 +89,35 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
             FileBackedTaskManager fileManager = FileBackedTaskManager.loadFromFile(tempFile);
         });
     }
+
+    @Test
+    public void testFileManagerLoadCorrectEpicDetails() {
+        Epic epic = new Epic("epic", "epic desc");
+        final int epicId = taskManager.addEpic(epic);
+
+        Subtask subtask1 = new Subtask("Subtask1", "Subtask 1 description", 60, LocalDateTime.of(2024, 10, 8, 1, 0, 0), epicId);
+        Subtask subtask2 = new Subtask("Subtask2", "Subtask 2 description", 60, LocalDateTime.of(2024, 10, 8, 3, 0, 0), epicId);
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
+        TaskManager taskManager2 = FileBackedTaskManager.loadFromFile(tempFile);
+
+        assertEquals(taskManager2.getEpicById(epicId).get(), epic);
+        assertEquals(taskManager2.getSubtasks(), taskManager.getSubtasks());
+    }
+
+    @Test
+    public void testFileManagerPrioritizedTasks() {
+        Epic epic = new Epic("epic", "epic desc");
+        final int epicId = taskManager.addEpic(epic);
+
+        Subtask subtask1 = new Subtask("Subtask1", "Subtask 1 description", epicId);
+        Subtask subtask2 = new Subtask("Subtask2", "Subtask 2 description", 60, LocalDateTime.of(2024, 10, 8, 3, 0, 0), epicId);
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
+
+        TaskManager taskManager2 = FileBackedTaskManager.loadFromFile(tempFile);
+
+        assertEquals(taskManager2.getEpicById(epicId).get(), epic);
+        assertEquals(2, taskManager2.getPrioritizedTasks().size());
+    }
 }
