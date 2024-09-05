@@ -208,7 +208,8 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         taskManager.addTask(task);
         taskManager.addTask(task2);
         assertEquals(2, taskManager.getTasks().size());
-        assertEquals(1, taskManager.getPrioritizedTasks().size());
+        assertEquals(2, taskManager.getPrioritizedTasks().size());
+
     }
 
     @Test
