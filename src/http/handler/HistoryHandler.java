@@ -1,0 +1,20 @@
+package http.handler;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import service.TaskManager;
+
+import java.io.IOException;
+
+public class HistoryHandler  extends BaseHttpHandler implements HttpHandler {
+    public HistoryHandler(TaskManager taskManager) {
+        super(taskManager);
+    }
+    /*
+    /history | GET | getHistory()
+     */
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+
+    }
+}
