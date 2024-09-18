@@ -1,5 +1,6 @@
 package service;
 
+import exception.TaskIntersectionException;
 import model.Epic;
 import model.Status;
 import model.Subtask;
@@ -35,9 +36,9 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
         final int subtaskId = taskManager.addSubtask(subtask);
 
-        assertEquals(task, taskManager.getTaskById(taskId).get());
-        assertEquals(epic, taskManager.getEpicById(epicId).get());
-        assertEquals(subtask, taskManager.getSubtaskById(subtaskId).get());
+        assertEquals(task, taskManager.getTaskById(taskId));
+        assertEquals(epic, taskManager.getEpicById(epicId));
+        assertEquals(subtask, taskManager.getSubtaskById(subtaskId));
     }
 
     @Test
@@ -61,14 +62,14 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
     @Test
     public void testTaskManagerReturnCorrectAnyTaskById() {
         final int taskId = taskManager.addTask(task);
-        assertEquals(task, taskManager.getTaskById(taskId).get());
+        assertEquals(task, taskManager.getTaskById(taskId));
 
         final int epicId = taskManager.addEpic(epic);
-        assertEquals(epic, taskManager.getEpicById(epicId).get());
+        assertEquals(epic, taskManager.getEpicById(epicId));
 
         Subtask subtask = new Subtask("subtask", "", 60, LocalDateTime.of(2024, 10, 8, 1, 1, 0), epicId);
         final int subtaskId = taskManager.addSubtask(subtask);
-        assertEquals(subtask, taskManager.getSubtaskById(subtaskId).get());
+        assertEquals(subtask, taskManager.getSubtaskById(subtaskId));
     }
 
     @Test
@@ -76,7 +77,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         taskManager.addTask(task);
         task.setStatus(Status.DONE);
         taskManager.updateTask(task);
-        assertEquals(task.getStatus(), taskManager.getTaskById(task.getId()).get().getStatus());
+        assertEquals(task.getStatus(), taskManager.getTaskById(task.getId()).getStatus());
     }
 
     @Test
@@ -108,7 +109,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
 
         ArrayList<Subtask> subtasks = new ArrayList<>();
         for (int subtaskId : epic.getSubtasks()) {
-            subtasks.add(taskManager.getSubtaskById(subtaskId).get());
+            subtasks.add(taskManager.getSubtaskById(subtaskId));
         }
 
         assertEquals(subtasks, taskManager.getEpicSubtasksByEpicId(epicId));
@@ -157,11 +158,11 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         final int taskId = taskManager.addTask(task);
 
         Task task2 = new Task(taskId + 1, "task1", "task1 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 0, 0, 0));
-        taskManager.addTask(task2);
+        assertThrows(TaskIntersectionException.class, () -> taskManager.addTask(task2));
         assertEquals(1, taskManager.getPrioritizedTasks().size());
 
         Task task3 = new Task(task2.getId() + 1, "task2", "task2 desc", Status.NEW, 60, LocalDateTime.of(2024, 10, 8, 0, 30, 0));
-        taskManager.addTask(task3);
+        assertThrows(TaskIntersectionException.class, () -> taskManager.addTask(task3));
         assertEquals(1, taskManager.getPrioritizedTasks().size());
         assertEquals(1, taskManager.getTasks().size());
 
@@ -227,7 +228,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         taskManager.updateSubtask(subtask);
 
         assertEquals(2, taskManager.getPrioritizedTasks().size());
-        assertNull(taskManager.getEpicById(epicId).get().getEndTime());
+        assertNull(taskManager.getEpicById(epicId).getEndTime());
     }
 
     @Test
@@ -250,7 +251,7 @@ public abstract class AbstractTaskManagerTest<T extends TaskManager> {
         task.setStartTime(LocalDateTime.of(2024, 10, 8, 0, 0, 0));
         taskManager.updateTask(task);
         subtask.setStartTime(LocalDateTime.of(2024, 10, 8, 0, 0, 0));
-        taskManager.updateSubtask(subtask);
+        assertThrows(TaskIntersectionException.class, () -> taskManager.updateSubtask(subtask));
         assertEquals(2, taskManager.getPrioritizedTasks().size());
     }
 }
