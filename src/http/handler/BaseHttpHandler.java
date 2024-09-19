@@ -19,7 +19,6 @@ public class BaseHttpHandler {
         this.taskManager = taskManager;
         gson = new GsonBuilder()
                 .setPrettyPrinting()
-                .serializeNulls()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
     }
 
