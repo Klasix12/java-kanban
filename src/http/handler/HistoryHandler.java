@@ -11,9 +11,7 @@ public class HistoryHandler  extends BaseHttpHandler implements HttpHandler {
     public HistoryHandler(TaskManager taskManager) {
         super(taskManager);
     }
-    /*
-    /history | GET | getHistory()
-     */
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         RequestMethod method = RequestMethod.valueOf(exchange.getRequestMethod());

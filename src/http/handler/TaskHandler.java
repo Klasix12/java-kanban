@@ -71,6 +71,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             sendNotFound(exchange);
         }
     }
+
     private Task extractTask(HttpExchange exchange) throws IOException {
         Task task = gson.fromJson(new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8), Task.class);
         if (task.getStatus() == null) {
