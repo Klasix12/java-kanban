@@ -60,6 +60,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             if (method == RequestMethod.GET) {
                 sendText(exchange, gson.toJson(taskManager.getTaskById(id)));
             } else if (method == RequestMethod.DELETE) {
+                taskManager.removeTaskById(id);
                 sendText(exchange, "Task was successfully deleted");
             }
         } catch (NumberFormatException e) {
