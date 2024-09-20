@@ -11,11 +11,11 @@ import java.net.InetSocketAddress;
 public class HttpTaskServer {
     private final TaskManager taskManager;
     private final HttpServer httpServer;
-    private final int PORT = 8080;
+    private final int port = 8080;
 
     public HttpTaskServer(TaskManager taskManager) throws IOException {
         this.taskManager = taskManager;
-        httpServer = HttpServer.create(new InetSocketAddress(PORT), 0);
+        httpServer = HttpServer.create(new InetSocketAddress(port), 0);
         httpServer.createContext("/tasks", new TaskHandler(taskManager));
         httpServer.createContext("/subtasks", new SubtaskHandler(taskManager));
         httpServer.createContext("/epics", new EpicHandler(taskManager));
