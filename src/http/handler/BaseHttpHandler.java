@@ -12,11 +12,10 @@ import java.nio.charset.StandardCharsets;
 
 public class BaseHttpHandler {
     protected final TaskManager taskManager;
-    protected Gson gson;
+    protected static Gson gson = Managers.getDefaultGson();;
 
     public BaseHttpHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
-        gson = Managers.getDefaultGson();
     }
 
     protected void sendText(HttpExchange exchange, String text) {
