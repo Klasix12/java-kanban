@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 public class BaseHttpHandler {
     protected final TaskManager taskManager;
-    protected static Gson gson = Managers.getDefaultGson();;
+    protected static Gson gson = Managers.getDefaultGson();
 
     public BaseHttpHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
