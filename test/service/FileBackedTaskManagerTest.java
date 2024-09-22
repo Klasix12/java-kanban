@@ -101,7 +101,7 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
         taskManager.addSubtask(subtask2);
         TaskManager taskManager2 = FileBackedTaskManager.loadFromFile(tempFile);
 
-        assertEquals(taskManager2.getEpicById(epicId).get(), epic);
+        assertEquals(taskManager2.getEpicById(epicId), epic);
         assertEquals(taskManager2.getSubtasks(), taskManager.getSubtasks());
     }
 
@@ -117,7 +117,7 @@ public class FileBackedTaskManagerTest extends AbstractTaskManagerTest<FileBacke
 
         TaskManager taskManager2 = FileBackedTaskManager.loadFromFile(tempFile);
 
-        assertEquals(taskManager2.getEpicById(epicId).get(), epic);
+        assertEquals(taskManager2.getEpicById(epicId), epic);
         assertEquals(2, taskManager2.getPrioritizedTasks().size());
     }
 }

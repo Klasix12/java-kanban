@@ -1,5 +1,7 @@
 package service;
 
+import exception.NotFoundException;
+import exception.TaskIntersectionException;
 import model.Epic;
 import model.Status;
 import model.Subtask;
@@ -64,30 +66,42 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Optional<Task> getTaskById(int id) {
+    public Task getTaskById(int id) {
         Task task = tasks.get(id);
+        if (task == null) {
+            throw new NotFoundException();
+        }
         historyManager.add(task);
-        return Optional.ofNullable(task);
+        return task;
     }
 
     @Override
-    public Optional<Epic> getEpicById(int id) {
+    public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
+        if (epic == null) {
+            throw new NotFoundException();
+        }
         historyManager.add(epic);
-        return Optional.ofNullable(epic);
+        return epic;
     }
 
     @Override
-    public Optional<Subtask> getSubtaskById(int id) {
+    public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
+        if (subtask == null) {
+            throw new NotFoundException();
+        }
         historyManager.add(subtask);
-        return Optional.ofNullable(subtask);
+        return subtask;
     }
 
     @Override
     public int addTask(Task task) {
-        if (task == null || !isValidTask(task)) {
+        if (task == null) {
             return -1;
+        }
+        if (!isValidTask(task)) {
+            throw new TaskIntersectionException();
         }
         final int taskId = generateId();
         task.setId(taskId);
@@ -109,8 +123,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addSubtask(Subtask subtask) {
-        if (subtask == null || !(epics.containsKey(subtask.getEpicId())) || !isValidTask(subtask)) {
+        if (subtask == null || !(epics.containsKey(subtask.getEpicId()))) {
             return -1;
+        }
+        if (!isValidTask(subtask)) {
+            throw new TaskIntersectionException();
         }
         final int subtaskId = generateId();
         subtask.setId(subtaskId);
@@ -124,8 +141,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task) {
-        if (task == null || !(tasks.containsKey(task.getId())) || !(isValidTask(task))) {
+        if (task == null || !(tasks.containsKey(task.getId()))) {
             return;
+        }
+        if (!(isValidTask(task))) {
+            throw new TaskIntersectionException();
         }
         tasks.put(task.getId(), task);
         removeTaskFromPrioritizedTasksById(task.getId());
@@ -142,8 +162,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubtask(Subtask subtask) {
-        if (subtask == null || !(subtasks.containsKey(subtask.getId())) || !isValidTask(subtask)) {
+        if (subtask == null || !(subtasks.containsKey(subtask.getId()))) {
             return;
+        }
+        if (!(isValidTask(subtask))) {
+            throw new TaskIntersectionException();
         }
         subtasks.put(subtask.getId(), subtask);
         removeTaskFromPrioritizedTasksById(subtask.getId());
